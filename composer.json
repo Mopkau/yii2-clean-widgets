@@ -1,0 +1,19 @@
+{
+  "name": "mopkau/yii2-clean-widgets",
+  "description": "Yii2 widgets without Bootstrap html tags",
+  "keywords": [
+    "yii2",
+    "bootstrap",
+    "clear html"
+  ],
+  "require": {
+    "yiisoft/yii2": "^2.0.8"
+  },
+  "authors": [
+    {
+      "name": "Philip Gromak",
+      "email": "info@gromoplan.com.ua",
+      "role": "developer"
+    }
+  ]
+}
