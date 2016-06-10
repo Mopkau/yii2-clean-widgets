@@ -1,25 +1,10 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
-
-namespace yii\widgets;
+namespace clear\widgets;
 
 use Yii;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
+use yii\widgets\ListView;
 
-/**
- * The ListView widget is used to display data from data
- * provider. Each data model is rendered using the view
- * specified.
- *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
- */
-class ListView extends BaseListView
+class ForeachView extends ListView
 {
     /**
      * @var array the HTML attributes for the container of the rendering result of each data model.
@@ -53,17 +38,41 @@ class ListView extends BaseListView
      */
     public $viewParams = [];
     /**
-     * @var string the HTML code to be displayed between any two consecutive items.
+     * @var string the layout that determines how different sections of the list view should be organized.
+     * The following tokens will be replaced with the corresponding section contents:
+     *
+     * - `{summary}`: the summary section. See [[renderSummary()]].
+     * - `{items}`: the list items. See [[renderItems()]].
+     * - `{sorter}`: the sorter. See [[renderSorter()]].
+     * - `{pager}`: the pager. See [[renderPager()]].
      */
-    public $separator = "\n";
+    public $layout = "{items}";
+
     /**
-     * @var array the HTML attributes for the container tag of the list view.
-     * The "tag" element specifies the tag name of the container element and defaults to "div".
-     * @see \yii\helpers\Html::renderTagAttributes() for details on how attributes are being rendered.
+     * Runs the widget.
      */
-    public $options = ['class' => 'list-view'];
+    public function run()
+    {
+        if ($this->showOnEmpty || $this->dataProvider->getCount() > 0) {
+            $content = preg_replace_callback("/{\\w+}/", function ($matches) {
+                $content = $this->renderSection($matches[0]);
 
-
+                return $content === false ? $matches[0] : $content;
+            }, $this->layout);
+        } else {
+            $content = $this->renderEmpty();
+        }
+        echo $content;
+    }
+    /**
+     * Renders the HTML content indicating that the list view has no data.
+     * @return string the rendering result
+     * @see emptyText
+     */
+    public function renderEmpty()
+    {
+        return $this->emptyText;
+    }
     /**
      * Renders all data models.
      * @return string the rendering result
@@ -102,9 +111,8 @@ class ListView extends BaseListView
             $content = call_user_func($this->itemView, $model, $key, $index, $this);
         }
         $options = $this->itemOptions;
-        $tag = ArrayHelper::remove($options, 'tag', 'div');
         $options['data-key'] = is_array($key) ? json_encode($key, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) : (string) $key;
 
-        return Html::tag($tag, $content, $options);
+        return  $content;
     }
 }

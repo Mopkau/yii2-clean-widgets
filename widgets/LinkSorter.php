@@ -1,28 +1,18 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
-
-namespace yii\widgets;
+namespace clear\widgets;
 
 use Yii;
 use yii\base\InvalidConfigException;
-use yii\base\Widget;
 use yii\data\Sort;
 use yii\helpers\Html;
 
-/**
- * LinkSorter renders a list of sort links for the given sort definition.
- *
- * LinkSorter will generate a hyperlink for every attribute declared in [[sort]].
- *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
- */
-class LinkSorter extends Widget
+class ClearLinkSorter extends LinkSorter
 {
+
+	/**
+     * @var HTML attribute for the sort container
+     */
+    public $containerTag = 'ul';
     /**
      * @var Sort the sort definition
      */
@@ -74,9 +64,9 @@ class LinkSorter extends Widget
         $attributes = empty($this->attributes) ? array_keys($this->sort->attributes) : $this->attributes;
         $links = [];
         foreach ($attributes as $name) {
-            $links[] = $this->sort->link($name, $this->linkOptions);
+            $links[] = $this->sort->link($name, array_merge($this->options, ['encode' => false], $this->linkOptions));
         }
 
-        return Html::ul($links, array_merge($this->options, ['encode' => false]));
+        return Html::tag($this->containerTag, $links);
     }
 }
