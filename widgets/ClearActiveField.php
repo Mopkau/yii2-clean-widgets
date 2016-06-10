@@ -1,5 +1,5 @@
 <?php
-namespace clear;
+namespace mopkau\widgets;
 
 use yii\widgets\ActiveField;
 

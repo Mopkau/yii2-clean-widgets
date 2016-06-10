@@ -1,5 +1,5 @@
 <?php
-namespace clear;
+namespace mopkau\widgets;
 
 use Yii;
 use yii\base\InvalidConfigException;
