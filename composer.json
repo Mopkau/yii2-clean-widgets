@@ -15,5 +15,10 @@
       "email": "info@gromoplan.com.ua",
       "role": "developer"
     }
-  ]
+  ],
+  "autoload": {
+    "psr-4": {
+      "clear\\": "widgets/"
+    }
+  },
 }

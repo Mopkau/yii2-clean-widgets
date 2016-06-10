@@ -1,5 +1,5 @@
 <?php
-namespace clear\widgets;
+namespace clear;
 
 use Yii;
 use yii\helpers\Html;

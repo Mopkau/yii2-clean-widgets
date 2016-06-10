@@ -1,5 +1,5 @@
 <?php
-namespace clear\widgets;
+namespace clear;
 
 use yii\widgets\ActiveField;
 
