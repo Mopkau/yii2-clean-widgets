@@ -3,7 +3,7 @@ namespace mopkau\widgets;
 
 use yii\widgets\ActiveField;
 
-class CleanActiveField extends ActiveField
+class ClearActiveField extends ActiveField
 {
 /** Base usage:
  *        <?php $form = ActiveForm::begin([
